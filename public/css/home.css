@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+header,
+footer {
+  height: 10vh;
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+footer {
+  display: grid;
+  place-items: center;
+}
+
+main {
+  height: 80vh;
+  display: grid;
+  place-items: center;
+}
+
+main .home {
+  display: grid;
+  place-items: center;
+}
+
+main form {
+  max-width: 500px;
+  width: 100%;
+  padding: 2rem 1rem;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.form-group label,
+.form-group input {
+  display: block;
+}
+
+input {
+  height: 3rem;
+  width: 100%;
+  padding: .25rem .5rem;
+}
