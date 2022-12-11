@@ -9,12 +9,6 @@
     border: 1px solid rgba(0, 0, 0, 0.3);
   }
 
-  .paid {
-    text-align: right;
-    color: green;
-    font-weight: bold;
-  }
-
   .form-group {
     display: block;
   }
@@ -22,11 +16,19 @@
   .username {
     font-weight: bold;
   }
-
-  h3 {
-    display: inline block;
+  .details {
+    display: inline-block;
     width: 120px;
   }
+  .fees {
+    /* border: 1px solid rgba(0, 0, 0, 0.3); */
+    padding: .5rem;
+    display: block;
+    font-size: 24px;
+    width: 40px;
+    font-weight: bold;
+  }
+
 </style>
 
 <form
@@ -34,7 +36,10 @@
   action="/accounts/update/<%=item.agent_id%>"
   method="POST"
 >
-  <h3><%=item.user_name %></h3>
+  <div class="details"">
+    <h3><%=item.user_name %></h3>
+    <b><small class="balance<%=item.agent_id%>"><%=item.balance%></small></b>
+  </div>
   <div class="form-group">
     <label>Anount To be paid</label>
     <input
@@ -76,63 +81,45 @@
       required
     />
   </div>
-  <h3 class="paid<%=item.agent_id%>">paid</h3>
+  <div class="fees">
+    <div class="expected<%=item.agent_id%>"><%=item.amount_expected%></div>
+    <div class="paid<%=item.agent_id%>"><%=item.cash + item.tickets%></div>
+  </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <script>
-  document.querySelector?.(".cash<%=item.agent_id%>")?.addEventListener("change", () => {
-    document.querySelector(".paid<%=item.agent_id%>").textContent =
-      +document.querySelector(".cash<%=item.agent_id%>").value +
-      +document.querySelector(".tickets<%=item.agent_id%>").value;
-  });
+  document
+    .querySelector?.(".cash<%=item.agent_id%>")
+    ?.addEventListener("change", () => {
+      document.querySelector(".paid<%=item.agent_id%>").textContent =
+        +document.querySelector(".cash<%=item.agent_id%>").value +
+        +document.querySelector(".tickets<%=item.agent_id%>").value;
+    });
 
-  document.querySelector(".tickets<%=item.agent_id%>").addEventListener("change", () => {
-    document.querySelector(".paid<%=item.agent_id%>").textContent =
-      +document.querySelector(".cash<%=item.agent_id%>").value +
-      +document.querySelector(".tickets<%=item.agent_id%>").value;
-  });
+  document
+    .querySelector(".tickets<%=item.agent_id%>")
+    .addEventListener("change", () => {
+      document.querySelector(".paid<%=item.agent_id%>").textContent =
+        +document.querySelector(".cash<%=item.agent_id%>").value +
+        +document.querySelector(".tickets<%=item.agent_id%>").value;
+    });
 
+var createColor = (num) => {
+    if(num > 0) return "green";
+    if(num < 0) return "red";
+    return "black";
+}
 
-  //   var submitForm = document.getElementById("<%=item._id%>");
-  //   submitForm.onsubmit = (e) => {
-  //     e.preventDefault();
-  //     const formData = new FormData(submitForm);
-  //     const data = Object.fromEntries(formData);
-  //     console.log({
-  //       amount_expected: +data.amount_expected,
-  //       cash: +data.cash,
-  //       tickets: +data.tickets,
-  //       agent_id: "<%=item.agent_id%>",
-  //       balance: +data.cash + +data.tickets - +data.amount_expected,
-  //     });
-  //     return;
-  //     fetch("/accounts/update", {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         amount_expected: +data.amount_expected,
-  //         cash: +data.cash,
-  //         tickets: +data.tickets,
-  //         agent_id: "<%=item.agent_id%>",
-  //         balance: +data.cash + +data.tickets - +data.amount_expected,
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //         // if (data.status === "success") {
-  //         //   alert("Account updated successfully");
-  //         //   window.location.reload();
-  //         // } else {
-  //         //   alert("Error updating account");
-  //         // }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         alert("Error updating account");
-  //       });
-  //   };
+var checkPaid = (paid, expected) => {
+    if(paid > expected) return `Paid`;
+    return ""
+}
+
+document.querySelector(".balance<%=item.agent_id%>").style.color = createColor(+document.querySelector(".balance<%=item.agent_id%>").textContent);
+
+document.querySelector(".expected<%=item.agent_id%>").style.color = "red";
+
+document.querySelector(".paid<%=item.agent_id%>").style.color = "green";
+
 </script>

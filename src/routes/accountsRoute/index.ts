@@ -6,7 +6,7 @@ import isAuthenticated from "../../middlewares/isAuthenticated";
 export default (router: Router) => {
   const account = new AccountController();
 
-  router.get(
+  router.post(
     paths.CREATE_ALL_ACCOUNTS,
     isAuthenticated,
     account.createAllAccounts

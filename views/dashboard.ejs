@@ -17,10 +17,6 @@
       .dashboard {
         height: 86vh;
         padding: 2rem;
-        /* display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center; */
       }
     </style>
     <!-- <link rel="stylesheet" href="/css/home.css" type="text/css"/> -->
@@ -33,13 +29,32 @@
   </head>
 
   <body>
-    <%- include('./partials/header'); -%>
+    <%- include('./partials/header' {isLoggedIn: true}); -%>
     <section class="dashboard">
-      <% accounts.forEach(item => { %> <%- include('./partials/form', {item, accounts});
-      -%> <% }) %>
+      <% if(accounts.length === 0){ %>
+      <button class="btn btn-primary create">Create accounts</button>
+      <% } %> <% accounts.length > 0 && accounts.forEach((item) => { %> <%-
+      include('./partials/form', {item, formatNumber}); -%> <% }) %>
     </section>
     <%- include('./partials/footer') -%>
 
-    <script src="/scripts/index.js"></script>
+    <script>
+      
+      document?.querySelector(".create")?.addEventListener("click", () => {
+        fetch("/accounts/create-accounts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({}),
+        })
+          .then(() => {
+            alert("Accounts created successfully");
+            window.location.reload();
+          })
+          .catch((err) => console.log(err));
+      });
+    </script>
   </body>
 </html>

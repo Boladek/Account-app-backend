@@ -7,4 +7,6 @@ export default {
     GET_ALL_USERS: "/users",
     GET_USER: "/user/:id",
     DASHBOARD: "/users/dashboard",
+    SUMMARY: "/users/summary",
+    LOGOUT: "/users/logout",
 }

@@ -15,6 +15,6 @@ export default (router: Router) => {
   router.get(paths.GET_USER, isAuthenticated, user.getUser);
   router.get(paths.GET_USER, isAuthenticated, user.getUser);
   router.get(paths.DASHBOARD, isAuthenticated, user.showDashboard);
-  //   router.put(paths.UPDATE, isAuthenticated, user.updateUser);
-  //   router.delete(paths.DELETE, isAuthenticated, user.deleteUser);
+  router.get(paths.SUMMARY, isAuthenticated, user.showSummary);
+  router.get(paths.LOGOUT, isAuthenticated, user.logout);
 };

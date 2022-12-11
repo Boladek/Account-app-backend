@@ -23,7 +23,7 @@
   </head>
 
   <body>
-    <%- include('./partials/header'); -%>
+    <%- include('./partials/header', {isLoggedIn: false}); -%>
     <main class="home">
       <form id="signup-form">
         <div class="form-group">
@@ -54,9 +54,9 @@
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" onkeyup="saveSignupInput(this)"
-          class="form-control" placeholder="Email Address""
-          aria-describedby="helpId" required />
+          <input type="email" name="email" id="email"
+          onkeyup="saveSignupInput(this)" class="form-control"
+          placeholder="Email Address"" aria-describedby="helpId" required />
         </div>
         <div class="d-flex gap-3">
           <div class="form-group">
@@ -109,6 +109,9 @@
         </div>
         <div class="d-flex justify-content-center">
           <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="d-flex justify-content-end">
+          <a href="/" class="text-decoration-none font-bold">login?</a>
         </div>
       </form>
     </main>

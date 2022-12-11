@@ -6,7 +6,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: all 5s ease;
     padding: 0 1rem;
   }
 
@@ -27,7 +26,7 @@
     flex: 1;
   }
 
-  div {
+  .summary {
     flex: 1;
     display: flex;
     justify-content: end;
@@ -55,18 +54,32 @@
 <header>
   <nav>
     <h1>Welcome</h1>
-    <ul>
-      <li><a href="/users/dashboard">Dashboard</a></li>
-      <li><a href="/users/register">Register</a></li>
-      <li><a href="/agents">Agents</a></li>
-    </ul>
-    <div>
-      Welcome User
-      <button class="btn btn-primary">
-        <a href="/users/logout" class="text-white text-decoration-none"
-          >Logout</a
-        >
-      </button>
-    </div>
+    <% if(isLoggedIn){ %>
+      <ul>
+        <li><a href="/users/dashboard">Dashboard</a></li>
+        <li><a href="/agents">Agents</a></li>
+        <li><a href="/users/summary">Summary</a></li>
+      </ul>
+      <div class="summary">
+        Welcome User
+        <button class="btn btn-primary logout">
+        <a href="/users/logout" class="text-decoration-none text-white">Logout</a>
+        </button>
+      </div>
+    <% } %>
   </nav>
 </header>
+<script>
+  // const logout = document.querySelector(".logout");
+
+  // function deleteCookies() {
+  //   const allCookies = document.cookie.split(";");
+  //   for (var i = 0; i < allCookies.length; i++)
+  //     document.cookie = allCookies[i] + "=;expires=" + new Date(0).toUTCString();
+  // }
+  // logout.addEventListener("click", () => {
+  //   localStorage.clear();
+  //   window.location.href = "/users/login";
+  //   deleteCookies();
+  // });
+</script>

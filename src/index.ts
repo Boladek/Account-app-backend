@@ -7,12 +7,11 @@ import "dotenv/config";
 import { connect } from "./database/index";
 import ErroHandler from "./utils/ErrorHandle";
 import AccountController from "./controllers/account";
-import cron from "node-cron";
 import path from "path";
 import cookieParser from "cookie-parser";
 // import ejs from "ejs";
 
-const account = new AccountController();
+// const account = new AccountController();
 
 const app = express();
 app.set("view engine", "ejs");
@@ -34,8 +33,8 @@ app.use((error: any, _: Request, responseWriter: Response, __: any) => {
 app.listen(process.env.PORT, () => {
   logger.info(`listening on port ${process.env.PORT}`);
 
-  cron.schedule("0 0 * * *", () => {
-    logger.info(`cron job is running`);
-    account.createAllAccounts();
-  });
+  // cron.schedule("0 0 * * *", () => {
+  //   logger.info(`cron job is running`);
+  //   account.createAllAccounts();
+  // });
 });

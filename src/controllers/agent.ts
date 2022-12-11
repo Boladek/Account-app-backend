@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import AgentModel from "../database/models/agent";
-import * as agentValidation from "../validations/agentValidation";
 import Agent from "../interfaces/agent";
+import * as agentValidation from "../validations/agentValidation";
 import * as RESPONSES from "../utils/constants";
 
 class AgentController {

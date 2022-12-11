@@ -47,7 +47,11 @@ class AccountController {
     }
   };
 
-  createAllAccounts = async () => {
+  createAllAccounts = async (
+    _req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const agents = await AgentModel.find({});
       const accounts = agents.map((agent: Agent) => {
@@ -60,9 +64,10 @@ class AccountController {
           amount_expected: 0,
         };
       });
-      return AccountModel.insertMany(accounts);
+      AccountModel.insertMany(accounts);
+      return res.status(200).redirect("/users/dashboard");
     } catch (error) {
-      return error;
+      next(error);
     }
   };
 
@@ -111,7 +116,9 @@ class AccountController {
       await AccountModel.findByIdAndUpdate(agent_account._id, value, {
         new: true,
       });
-      const agent: Agent = await AgentModel.findOne({ _id: agent_account.agent_id });
+      const agent: Agent = await AgentModel.findOne({
+        _id: agent_account.agent_id,
+      });
       await AgentModel.findByIdAndUpdate(
         value.agent_id,
         { balance: agent.balance + value.balance },
