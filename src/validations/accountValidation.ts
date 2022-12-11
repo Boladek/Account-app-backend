@@ -14,10 +14,11 @@ export const createAccountValidation = (body: Account) => {
 
 export const updateAccountValidation = (body: Account) => {
   const schema = Joi.object().keys({
-    agent_id: Joi.string(),
+    agent_id: Joi.string().required(),
     tickets: Joi.number(),
     cash: Joi.number(),
     balance: Joi.number(),
+    amount_expected: Joi.number().required(),
   });
   return schema.validate(body);
 };

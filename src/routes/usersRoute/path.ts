@@ -1,9 +1,10 @@
 export default {
     SIGN_UP: "/users/signup",
+    BASE_ROUTE: "/",
     LOGIN: "/users/login",
-    DELETE: "/users/:id",
-    UPDATE: "/users/:id",
+    DELETE: "/user/:id",
+    UPDATE: "/user/:id",
     GET_ALL_USERS: "/users",
-    GET_USER: "/users/:id",
-    DASHBOARD: "/user/dashboard",
+    GET_USER: "/user/:id",
+    DASHBOARD: "/users/dashboard",
 }

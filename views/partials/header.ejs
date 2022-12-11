@@ -1,9 +1,72 @@
+<style>
+  nav {
+    height: 7vh;
+    background-color: #1e1e1e;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 5s ease;
+    padding: 0 1rem;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid red;
+    align-self: center;
+  }
+
+  ul {
+    flex: 3;
+  }
+
+  h1 {
+    flex: 1;
+  }
+
+  div {
+    flex: 1;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  nav ul li {
+    padding: 0 0.5rem;
+    display: inline-block;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: medium;
+  }
+
+  nav ul li a:hover {
+    color: #ddd;
+    font-size: large;
+    transition: all 0.5s ease;
+  }
+</style>
 <header>
-  <nav class="nav d-flex align-items-center bg-red bg-secondary text-white p-3">
+  <nav>
     <h1>Welcome</h1>
-    <ul class="d-flex">
-      <li><a href="/account">Login</a></li>
-      <li><a href="/account">Signu</a></li>
+    <ul>
+      <li><a href="/users/dashboard">Dashboard</a></li>
+      <li><a href="/users/register">Register</a></li>
+      <li><a href="/agents">Agents</a></li>
     </ul>
+    <div>
+      Welcome User
+      <button class="btn btn-primary">
+        <a href="/users/logout" class="text-white text-decoration-none"
+          >Logout</a
+        >
+      </button>
+    </div>
   </nav>
 </header>

@@ -17,19 +17,17 @@ const agentSchema = new Schema<AgentInterface>(
 			type: String,
 			required: true,
 		},
-        user_id: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-        },
+        guarantor: {
+			type: String,
+		},
         balance: {
             type: Number,
             required: true,
         },
-        terminals: {
-            type: [String],
-            required: true,
-        }
+        // terminals: {
+        //     type: [String],
+        //     required: true,
+        // }
 	},
 	{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } },
 );

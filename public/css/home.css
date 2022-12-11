@@ -2,8 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 16px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
+  font-family: Calibri, sans-serif;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
 
 header,
 footer {
-  height: 10vh;
+  height: 7vh;
   background-color: #1e1e1e;
   color: #fff;
 }
@@ -24,7 +24,7 @@ footer {
 }
 
 main {
-  height: 80vh;
+  height: 86vh;
   display: grid;
   place-items: center;
 }
@@ -44,15 +44,22 @@ main form {
 
 .form-group {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .form-group label,
-.form-group input {
+.form-group input,
+.form-group select {
   display: block;
 }
 
 input {
   height: 3rem;
   width: 100%;
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+select {
+  height: 3rem;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
 }

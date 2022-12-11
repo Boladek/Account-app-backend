@@ -8,10 +8,11 @@ class AgentController {
   getAllAgents = async (_req: Request, res: Response, next: NextFunction) => {
     try {
         const agents: Agent[] = await AgentModel.find();
-        res.status(200).json({
-          message: RESPONSES.API_RESPONSE_STATUS.SUCCESS,
-          data: agents,
-        });
+        return res.render("agents", {agents})
+        // res.status(200).json({
+        //   message: RESPONSES.API_RESPONSE_STATUS.SUCCESS,
+        //   data: agents,
+        // });
     } catch (error) {
         next(error)
     }
@@ -25,13 +26,13 @@ class AgentController {
       }
       const agent : Agent = await AgentModel.create({
         ...value,
+        balance: 0,
       });
       res.status(201).json({
-        message: RESPONSES.USER_RESPONSE_MESSAGE.CREATED,
-        data: agent,
+        message: RESPONSES.API_RESPONSE_STATUS.SUCCESS,
+        code: 201,
       });
     } catch (error) {
-      console.log(error);
         next(error)
     }
   };
@@ -58,16 +59,6 @@ class AgentController {
       res.send(error.message);
     }
   };
-
-//   updateAgent = async (req: Request, res: Response) => {
-//     try{
-//       const { error, value } = userValidators.updateValidation(req.body);
-//       const user = await UserModel.findByIdAndUpdate(req.params.id, value, {new: true})
-//       res.send(user);
-//     } catch (error) {
-
-//     }
-//   };
 }
 
 export default AgentController;

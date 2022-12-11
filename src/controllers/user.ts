@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import UserModel from "../database/models/user";
+import AccountModel from "../database/models/account";
 import bcrypt from "bcrypt";
 import * as userValidators from "../validations/userValidation";
 import User from "../interfaces/user";
@@ -21,20 +22,24 @@ class UserController {
 
   createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      if (req.method === "GET") {
+        return res.status(200).render("signup");
+      }
       const { error, value } = userValidators.signUpValidation(req.body);
       if (error?.details[0].message) {
         return res.status(422).send(error?.details[0].message);
       }
       const { password } = value;
       const hash = await bcrypt.hash(password, 8);
-      const user: User = await UserModel.create({
+      await UserModel.create({
         ...value,
         password: hash,
         account_number: value.phone,
       });
       res.status(200).json({
         message: RESPONSES.USER_RESPONSE_MESSAGE.CREATED,
-        data: user,
+        // data: user,
+        code: 201,
       });
     } catch (error: any) {
       next(error);
@@ -44,6 +49,9 @@ class UserController {
   login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (req.method === "GET") {
+        if(req.url === "/"){
+          return res.status(200).redirect("/users/login");
+        }
         return res.status(200).render("home");
       }
       const { error, value } = userValidators.LoginValidation(req.body);
@@ -95,8 +103,14 @@ class UserController {
   };
 
   showDashboard = async (req: Request, res: Response) => {
-    return res.render("dashboard", { user: req.cookies.user });
-  }
+    const accounts = await AccountModel.find({
+      created_at: {
+        $gte: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
+        $lt: new Date().toISOString(),
+      },
+    });
+    return res.render("dashboard", { user: req.cookies.user, accounts });
+  };
 
   //   deleteUser = async (req: Request, res: Response) => {
   //     try{

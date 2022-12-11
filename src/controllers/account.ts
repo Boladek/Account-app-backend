@@ -32,11 +32,11 @@ class AccountController {
         ...value,
       });
       const agent: any = await AgentModel.findOne({ _id: value.agent_id });
-    //   await AgentModel.findByIdAndUpdate(
-    //     value.agent_id,
-    //     { balanace: agent.balance - account.balance },
-    //     { new: true }
-    //   );
+      //   await AgentModel.findByIdAndUpdate(
+      //     value.agent_id,
+      //     { balanace: agent.balance - account.balance },
+      //     { new: true }
+      //   );
       res.status(201).json({
         message: RESPONSES.API_RESPONSE_STATUS.SUCCESS,
         data: account,
@@ -50,21 +50,21 @@ class AccountController {
   createAllAccounts = async () => {
     try {
       const agents = await AgentModel.find({});
-      const accounts = agents.map((item: Agent) => {
+      const accounts = agents.map((agent: Agent) => {
         return {
-        user_name : item.user_name,
-        balance : item.balance,
-        cash : 0,
-        tickets: 0,
-        agent_id : item._id,
-        amount_expected: 0,
-        }
-      })
+          user_name: agent.user_name,
+          balance: agent.balance,
+          cash: 0,
+          tickets: 0,
+          agent_id: agent._id,
+          amount_expected: 0,
+        };
+      });
       return AccountModel.insertMany(accounts);
     } catch (error) {
-      return error
+      return error;
     }
-  }
+  };
 
   getTodaysAccount = async (
     _req: Request,
@@ -93,14 +93,16 @@ class AccountController {
     next: NextFunction
   ) => {
     try {
-      const { error, value } = accountValidation.updateAccountValidation(
-        req.body
-      );
+      const { error, value } = accountValidation.updateAccountValidation({
+        ...req.body,
+        agent_id: req.params.id,
+        balance: +req.body.cash + +req.body.tickets - +req.body.amount_expected,
+      });
       if (error?.details[0].message) {
         return res.status(422).send(error?.details[0].message);
       }
       const agent_account = await AccountModel.findOne({
-        agent_id: req.body.agent_id,
+        agent_id: value.agent_id,
         created_at: {
           $gte: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
           $lt: new Date().toISOString(),
@@ -109,13 +111,13 @@ class AccountController {
       await AccountModel.findByIdAndUpdate(agent_account._id, value, {
         new: true,
       });
-      const agent: any = await AgentModel.findOne({ _id: value.agent_id });
+      const agent: Agent = await AgentModel.findOne({ _id: agent_account.agent_id });
       await AgentModel.findByIdAndUpdate(
         value.agent_id,
-        { balanace: agent.balance - value.balance },
+        { balance: agent.balance + value.balance },
         { new: true }
       );
-      res.status(200).send("Successfully updated Account");
+      res.status(200).redirect("/users/dashboard");
     } catch (error) {
       next(error);
     }

@@ -6,9 +6,10 @@ export const createAgentValidation = (body: Agent) => {
     user_name: Joi.string().min(2).max(30).required(),
     phone_number: Joi.string().min(9).max(30).required(),
     location: Joi.string().min(2).max(30).required(),
-    balance: Joi.number().required(),
-    user_id: Joi.string().required(),
-    terminals: Joi.array().items(Joi.string()).required(),
+    balance: Joi.number(),
+    guarantor: Joi.string()
+    // user_id: Joi.string().required(),
+    // terminals: Joi.array().items(Joi.string()).required(),
   });
   return schema.validate(body);
 };

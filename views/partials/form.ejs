@@ -1,0 +1,138 @@
+<style>
+  form {
+    display: flex;
+    padding: 1rem 2rem;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+
+  .paid {
+    text-align: right;
+    color: green;
+    font-weight: bold;
+  }
+
+  .form-group {
+    display: block;
+  }
+
+  .username {
+    font-weight: bold;
+  }
+
+  h3 {
+    display: inline block;
+    width: 120px;
+  }
+</style>
+
+<form
+  id="<%=item._id%>"
+  action="/accounts/update/<%=item.agent_id%>"
+  method="POST"
+>
+  <h3><%=item.user_name %></h3>
+  <div class="form-group">
+    <label>Anount To be paid</label>
+    <input
+      autofocus
+      type="number"
+      min="0"
+      step="10"
+      class="amount"
+      name="amount_expected"
+      value="<%=item.amount_expected%>"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label>Cash</label>
+    <input
+      autofocus
+      type="number"
+      min="0"
+      step="10"
+      name="cash"
+      class="cash<%=item.agent_id%>"
+      placeholder="Cash"
+      value="<%=item.cash%>"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label>Tickets</label>
+    <input
+      autofocus
+      type="number"
+      min="0"
+      step="1200"
+      class="tickets<%=item.agent_id%>"
+      name="tickets"
+      placeholder="Ticket"
+      value="<%=item.tickets%>"
+      required
+    />
+  </div>
+  <h3 class="paid<%=item.agent_id%>">paid</h3>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+  document.querySelector?.(".cash<%=item.agent_id%>")?.addEventListener("change", () => {
+    document.querySelector(".paid<%=item.agent_id%>").textContent =
+      +document.querySelector(".cash<%=item.agent_id%>").value +
+      +document.querySelector(".tickets<%=item.agent_id%>").value;
+  });
+
+  document.querySelector(".tickets<%=item.agent_id%>").addEventListener("change", () => {
+    document.querySelector(".paid<%=item.agent_id%>").textContent =
+      +document.querySelector(".cash<%=item.agent_id%>").value +
+      +document.querySelector(".tickets<%=item.agent_id%>").value;
+  });
+
+
+  //   var submitForm = document.getElementById("<%=item._id%>");
+  //   submitForm.onsubmit = (e) => {
+  //     e.preventDefault();
+  //     const formData = new FormData(submitForm);
+  //     const data = Object.fromEntries(formData);
+  //     console.log({
+  //       amount_expected: +data.amount_expected,
+  //       cash: +data.cash,
+  //       tickets: +data.tickets,
+  //       agent_id: "<%=item.agent_id%>",
+  //       balance: +data.cash + +data.tickets - +data.amount_expected,
+  //     });
+  //     return;
+  //     fetch("/accounts/update", {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         amount_expected: +data.amount_expected,
+  //         cash: +data.cash,
+  //         tickets: +data.tickets,
+  //         agent_id: "<%=item.agent_id%>",
+  //         balance: +data.cash + +data.tickets - +data.amount_expected,
+  //       }),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         // if (data.status === "success") {
+  //         //   alert("Account updated successfully");
+  //         //   window.location.reload();
+  //         // } else {
+  //         //   alert("Error updating account");
+  //         // }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         alert("Error updating account");
+  //       });
+  //   };
+</script>
