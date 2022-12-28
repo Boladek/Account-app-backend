@@ -1,5 +1,5 @@
 {
-  "name": "Account-app-backend",
+  "name": "Account-app",
   "version": "1.0.0",
   "main": "dist/index.js",
   "repository": "git@github.com:Boladek/Account-app-backend.git",
